@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AnimeList</string>
+    <string name="nom">nom</string>
+    <string name="type">type</string>
+    <string name="date">date</string>
+    <string name="annee">annee</string>
+</resources>
