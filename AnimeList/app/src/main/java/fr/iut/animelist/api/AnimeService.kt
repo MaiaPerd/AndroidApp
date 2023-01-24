@@ -1,14 +1,17 @@
 package fr.iut.animelist.api
 
-import fr.iut.animelist.data.Anime
+import fr.iut.animelist.model.Anime
 import retrofit2.Call
 import retrofit2.http.GET
 
 interface AnimeService {
 
         @GET("anime")
-        fun listRepos(): Call<List<Anime?>?>?
+        fun listAnimes(): Call<List<Anime>>
 
         @GET("anime/1")
-        fun listOneAnimeRepos(): Call<Anime>
+        fun listOneAnime(): Call<Anime>
+
+        @GET("anime")
+        fun getAnime(): List<Anime>
 }
