@@ -1,6 +1,7 @@
 package fr.iut.animelist.model
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
@@ -19,9 +20,10 @@ data class Anime(@SerializedName("id") var id: Int = 0,
                  var rank: Int = -1 )*/
 
 @Entity(tableName = "anime_table")
-data class Anime(@SerializedName("id") var id: String = "",
-                 @SerializedName("type") var type: String = "",
-                 @SerializedName("attributes") var info: Information)
+data class Anime(@PrimaryKey @SerializedName("id") var id: String = "",
+                 @SerializedName("type") var type: String = "")
+                 //@SerializedName("attributes") var info: Information)
+
 
 data class Information(@SerializedName("slug") var titre: String = "",
                        @SerializedName("synopsis") var synopsis: String = "",

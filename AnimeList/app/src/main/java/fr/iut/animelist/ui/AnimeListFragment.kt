@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import fr.iut.animelist.MainActivity
 import fr.iut.animelist.R
 
 class AnimeListFragment : Fragment()  {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -24,7 +23,7 @@ class AnimeListFragment : Fragment()  {
         var  view = inflater.inflate(R.layout.fragment_list_anime, container, false)
         val recyclerView: RecyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
 
-        recyclerView.adapter = AdaptateurAnimeList(MainActivity().listAnime, view)
+
 
         //var chien: Chien = MainActivity().liste[position?: 0]
         //view.findViewById<EditText>(R.id.inputNom).setText(chien.nom)

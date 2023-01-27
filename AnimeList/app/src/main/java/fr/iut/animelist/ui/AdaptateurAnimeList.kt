@@ -5,59 +5,65 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import fr.iut.animelist.R
 import fr.iut.animelist.model.Anime
 
+class AdaptateurAnimeList: ListAdapter<Anime, AdaptateurAnimeList.AnimeViewHolder>(ANIME_COMPARATOR) {
 
-class AdaptateurAnimeList(private val dataSet: List<Anime>, private val view: View) : RecyclerView.Adapter<AdaptateurAnimeList.AnimeViewHolder>(){
-    class AnimeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): AnimeViewHolder {
+        return AnimeViewHolder.create(viewGroup)
+    }
 
+    override fun onBindViewHolder(viewHolder: AnimeViewHolder, position: Int) {
+        val currentItem = getItem(position)
+        viewHolder.bind(currentItem)
+
+    }
+
+    class AnimeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nomItem: TextView
         val typeItem: TextView
         val anneeItem: TextView
-        val anime: CardView
+        val animeCard: CardView
 
         init{
 
-            nomItem = view.findViewById(R.id.nomItem)
-            typeItem = view.findViewById(R.id.typeItem)
-            anneeItem = view.findViewById(R.id.anneeItem)
-            anime = view.findViewById<CardView>(R.id.animeItem)
+            nomItem = itemView.findViewById(R.id.nomItem)
+            typeItem = itemView.findViewById(R.id.typeItem)
+            anneeItem = itemView.findViewById(R.id.anneeItem)
+            animeCard = itemView.findViewById<CardView>(R.id.animeItem)
 
         }
+        fun bind(anime: Anime?) {
+            nomItem.text = anime?.id
+            typeItem.text =  anime?.type
+            anneeItem.text =  anime?.type
+          //  animeCard.setCardBackgroundColor(Color.RED)
+        }
 
+        companion object {
+            fun create(parent: ViewGroup): AnimeViewHolder {
+                val view: View = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_list_anime, parent, false)
+                return AnimeViewHolder(view)
+            }
+        }
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): AnimeViewHolder {
-        val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.item_list_anime, viewGroup, false)
+    companion object {
+        private val ANIME_COMPARATOR = object : DiffUtil.ItemCallback<Anime>() {
+            override fun areItemsTheSame(oldItem: Anime, newItem: Anime): Boolean {
+                return oldItem === newItem
+            }
 
-        return AnimeViewHolder(view)
+            override fun areContentsTheSame(oldItem: Anime, newItem: Anime): Boolean {
+                return oldItem.id == newItem.id
+            }
+        }
     }
 
-
-    override fun onBindViewHolder(viewHolder: AnimeViewHolder, position: Int) {
-        viewHolder.nomItem.text = dataSet[position].id
-        viewHolder.typeItem.text = dataSet[position].type
-        viewHolder.anneeItem.text = dataSet[position].type
-
-       // viewHolder.anime.setOnClickListener{  listener.onDogSelected(dataSet[position].id) }
-        /*
-        viewHolder.chien.setOnClickListener{view ->
-           voirChien(dataSet[position], position)
-        }*/
-
-    }
-
-    override fun getItemCount() = dataSet.size
-
-    /*  fun detailChien(nom: String, race: String){
-          MainActivity().startNewActivityChien(nom, race)
-      }*/
-
-    interface DogSelected {
-        fun onDogSelected(dogId: Long)
-    }
 }
 

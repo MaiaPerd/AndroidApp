@@ -4,4 +4,6 @@
     <string name="type">type</string>
     <string name="date">date</string>
     <string name="annee">annee</string>
+    <string name="mylist">myList</string>
+    <string name="sysnopsi">sysnopsi</string>
 </resources>

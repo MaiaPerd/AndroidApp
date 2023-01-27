@@ -2,7 +2,6 @@ package fr.iut.animelist.api
 
 import android.util.Log
 import fr.iut.animelist.model.Anime
-import fr.iut.animelist.model.Information
 import fr.iut.animelist.ui.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,7 +25,7 @@ class APICall {
             if(res != null){
                 return res
             }*/
-            return Anime("","", Information("a","a"))
+            return Anime("","")
         }
 
         init {
