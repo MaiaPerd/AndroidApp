@@ -15,4 +15,5 @@ class AnimeRepository(private val animeDao: AnimeDao) {
         animeDao.insert(anime)
     }
 
+
 }

@@ -1,10 +1,10 @@
 package fr.iut.animelist.data.persistence
 
+import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import fr.iut.animelist.MainActivity
 import fr.iut.animelist.data.DAO.AnimeDao
 import fr.iut.animelist.model.Anime
 import kotlinx.coroutines.CoroutineScope
@@ -27,11 +27,10 @@ abstract class AnimeDataBase: RoomDatabase() {
                     // Delete all content here.
                     animeDao.deleteAll()
 
-
                     // Add sample words.
-                    var anime = Anime("0", "A")
+                    var anime = Anime("0", "anime 1")
                     animeDao.insert(anime)
-                    anime = Anime("1", "B")
+                    anime = Anime("1", "anime 2")
                     animeDao.insert(anime)
 
                 }
@@ -45,7 +44,7 @@ abstract class AnimeDataBase: RoomDatabase() {
         private var INSTANCE: AnimeDataBase? = null
 
         fun getDatabase(
-            context: MainActivity,
+            context: Context,
             scope: CoroutineScope): AnimeDataBase{
             return  INSTANCE ?: synchronized(this) {
                 val  instance = Room.databaseBuilder(

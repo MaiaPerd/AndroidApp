@@ -9,23 +9,21 @@ import retrofit2.Response
 
 class APICall {
 
-        var anime = RetrofitClient().getClient()?.listOneAnime()
+
 
         fun getAnime(id: Int): Anime?{
-            var res: Anime?
+            val anime = RetrofitClient().getClient()?.getAnimeById(id)
+            var res: Anime? = null
             anime?.enqueue(object: Callback<Anime> {
                 override fun onResponse(call: Call<Anime>, response: Response<Anime>) {
-                    res = response.body()
+                    res = response.body() //LiveData
                     Log.e("Service", "The call is back with success")
                 }
                 override fun onFailure(call: Call<Anime>, t: Throwable) {
-                    Log.e("Service", "Not call success");
+                    Log.e("Service", "Not call success")
                 }
-            })/*
-            if(res != null){
-                return res
-            }*/
-            return Anime("","")
+            })
+            return res
         }
 
         init {

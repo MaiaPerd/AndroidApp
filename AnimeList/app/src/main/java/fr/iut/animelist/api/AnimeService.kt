@@ -3,6 +3,8 @@ package fr.iut.animelist.api
 import fr.iut.animelist.model.Anime
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
+
 
 interface AnimeService {
 
@@ -14,4 +16,7 @@ interface AnimeService {
 
         @GET("anime")
         fun getAnime(): List<Anime>
+
+        @GET("anime/{id}")
+        fun getAnimeById(@Path("id") id: Int): Call<Anime>
 }
