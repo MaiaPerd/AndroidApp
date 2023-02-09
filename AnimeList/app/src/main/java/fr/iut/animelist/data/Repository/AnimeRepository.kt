@@ -21,5 +21,9 @@ class AnimeRepository(private val animeDao: AnimeDao) {
         animeDao.deleteAll()
     }
 
+    fun getAnime(animeId: Int): LiveData<Anime>  {
+        return animeDao.getAnime(animeId)
+    }
+
 
 }

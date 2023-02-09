@@ -1,10 +1,7 @@
 package fr.iut.animelist.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import fr.iut.animelist.data.Repository.AnimeRepository
 import fr.iut.animelist.model.Anime
 import kotlinx.coroutines.launch
@@ -21,6 +18,8 @@ class AnimeListViewModel(private val repository: AnimeRepository) : ViewModel() 
         }
 
     }
+
+    val showEmptyView = Transformations.map(allAnimes, List<Anime>::isEmpty)
 
 
     fun insert(anime: Anime) = viewModelScope.launch {

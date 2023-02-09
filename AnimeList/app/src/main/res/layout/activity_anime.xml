@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.AnimeActivity">
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/animeFragment"
-        android:name="fr.iut.animelist.ui.AnimeFragment"
+
+    <FrameLayout
+        android:id="@+id/container_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

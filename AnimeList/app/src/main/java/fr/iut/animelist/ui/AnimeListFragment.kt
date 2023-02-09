@@ -11,11 +11,10 @@ import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import fr.iut.animelist.R
 import fr.iut.animelist.api.APICall
 import fr.iut.animelist.data.Repository.AnimeRepository
+import fr.iut.animelist.databinding.FragmentListAnimeBinding
 import fr.iut.animelist.viewmodel.AnimeListViewModel
 import fr.iut.animelist.viewmodel.AnimeListViewModelFactory
 
@@ -38,20 +37,20 @@ class AnimeListFragment : Fragment(), AdaptateurAnimeList.Callbacks,
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_list_anime, container, false)
-        val recyclerView: RecyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
-
-        val adapter = AdaptateurAnimeList(this)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        animeListViewModel.allAnimes.observe(viewLifecycleOwner) { anime ->
-            anime.let { adapter.submitList(it) }
+        val binding = FragmentListAnimeBinding.inflate(inflater)
+        binding.animeListVM = animeListViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        val animeAdapter = AdaptateurAnimeList(this)
+        with(binding.recyclerView) {
+            adapter = animeAdapter
         }
 
-        val spinner: Spinner = view.findViewById(R.id.spinner)
+        animeListViewModel.allAnimes.observe(viewLifecycleOwner) { anime ->
+            anime.let { animeAdapter.submitList(it) }
+        }
+        val spinner: Spinner = binding.spinner
         ArrayAdapter.createFromResource(
-            view.context, R.array.category_array, android.R.layout.simple_spinner_item
+            binding.root.context, R.array.category_array, android.R.layout.simple_spinner_item
         ).also { ad ->
             ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = ad
@@ -61,7 +60,7 @@ class AnimeListFragment : Fragment(), AdaptateurAnimeList.Callbacks,
         APICall().getGenres()?.observe(viewLifecycleOwner) { list ->
             var arrayList = list.map { l -> l.info?.name }
             val arrayAdapter =
-                ArrayAdapter(view.context, android.R.layout.simple_spinner_item, arrayList)
+                ArrayAdapter(binding.root.context, android.R.layout.simple_spinner_item, arrayList)
             spinner.adapter = arrayAdapter
         }
 
@@ -69,9 +68,7 @@ class AnimeListFragment : Fragment(), AdaptateurAnimeList.Callbacks,
             for (item in list) animeListViewModel.insert(item)
         }
 
-
-
-        return view
+        return binding.root
     }
 
     override fun onAnimeSelected(id: Int) {

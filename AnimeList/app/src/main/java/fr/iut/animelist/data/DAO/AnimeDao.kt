@@ -13,6 +13,9 @@ interface AnimeDao {
     @Query("SELECT * FROM anime_table ORDER BY id ASC")
     fun getAnimes(): LiveData<List<Anime>>
 
+    @Query("SELECT * FROM anime_table WHERE id = :id")
+    fun getAnime(id: Int): LiveData<Anime>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(anime: Anime)
 

@@ -7,8 +7,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import fr.iut.animelist.R
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import fr.iut.animelist.api.APICall
+import fr.iut.animelist.data.Repository.AnimeRepository
+import fr.iut.animelist.data.persistence.AnimeDataBase
+import fr.iut.animelist.databinding.FragmentAnimeBinding
+import fr.iut.animelist.viewmodel.AnimeViewModel
+import fr.iut.animelist.viewmodel.AnimeViewModelFactory
 
 class AnimeFragment : Fragment() {
 
@@ -21,12 +27,25 @@ class AnimeFragment : Fragment() {
         }
     }
 
+    private lateinit var repository: AnimeRepository
+    private lateinit var animeViewModel: AnimeViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        repository = AnimeRepository(
+            AnimeDataBase.getDatabase(
+                requireContext()
+            ).animeDao()
+        )
 
+        var a = savedInstanceState?.getInt(EXTRA_ANIME_ID)
+        var b = arguments?.getInt(EXTRA_ANIME_ID)
         id = (savedInstanceState?.getInt(EXTRA_ANIME_ID) ?: arguments?.getInt(EXTRA_ANIME_ID))
+        var animeId: Int = id?:1
+        animeViewModel = ViewModelProvider(this,  AnimeViewModelFactory(repository, animeId) ).get()
 
     }
+
 
 
     lateinit var nameAnime: TextView
@@ -35,18 +54,18 @@ class AnimeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_anime, container, false)
-        updateViewFromCurrentDog()
-        nameAnime = view.findViewById<TextView>(R.id.txtNom)
+        val binding = FragmentAnimeBinding.inflate(inflater)
+        binding.animeVM = animeViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        updateViewFromCurrentDog(binding)
 
-
-        return view
+        return binding.root
     }
 
-    private fun updateViewFromCurrentDog() {
+    private fun updateViewFromCurrentDog(binding: FragmentAnimeBinding) {
 
         APICall().getAnime(id ?: 1)?.observe(viewLifecycleOwner) { anime ->
-            nameAnime.text = anime.info?.titre
+            binding.txtNom.text = anime.info?.titre
         }
     }
 
