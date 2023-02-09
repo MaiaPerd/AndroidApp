@@ -2,52 +2,48 @@ package fr.iut.animelist
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import fr.iut.animelist.ui.AnimeActivity
+import fr.iut.animelist.ui.AnimeFragment
+import fr.iut.animelist.ui.AnimeListFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AnimeListFragment.OnInteractionListener {
 
-    private val newAnimeActivityRequestCode = 1
+    private var isTwoPane: Boolean = false
 
-   /* val applicationScope = CoroutineScope(SupervisorJob())
-
-    val database by lazy { AnimeDataBase.getDatabase(this, applicationScope) }
-    val repository by lazy { AnimeRepository(database.animeDao()) }
-    //val animeViewModel: AnimeViewModel by viewModels()
-    val animeViewModel by lazy { AnimeViewModel(repository) }*/
+    private lateinit var masterFragment: AnimeListFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //APICall().getAnime(1)?.let { listAnime.add(it) }
-/*
-        val animeObserver = Observer<List<Anime>> { newName ->
-            val test: TextView = this.findViewById<TextView>(R.id.nomTest)
-            test.setText(newName[0].id)
-            listAnime.addAll(newName)
+        supportActionBar?.setIcon(R.mipmap.ic_launcher)
+
+        isTwoPane = supportFragmentManager.findFragmentById(R.id.container_fragment_detail) != null
+        if (savedInstanceState != null)
+            masterFragment =
+                supportFragmentManager.findFragmentById(R.id.container_fragment) as AnimeListFragment
+
+        if (!isTwoPane) {
+            removeDisplayedFragment()
         }
 
-        var ab = animeViewModel.allAnimes.observe(this, animeObserver)
-*/
 
-/*
-        APICall().getAnime(2)?.let { animeViewModel.insert(it) }
+    }
 
-        APICall().getAnime(1)?.let { animeViewModel.insert(it) }
-*/
-/*
-        val recyclerView: RecyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-        val adapter = AdaptateurAnimeList()
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
-        val animeObserver = Observer<List<Anime>> { anime ->
-            anime.let { adapter.submitList(it) }
+    override fun onAnimeSelected(id: Int) {
+        if (isTwoPane) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container_fragment_detail, AnimeFragment.newInstance(id))
+                .commit()
+        } else {
+            startActivity(AnimeActivity.getIntent(this, id))
         }
-        animeViewModel.allAnimes.observe(this, animeObserver)
-*/
+    }
 
-
-
+    private fun removeDisplayedFragment() {
+        supportFragmentManager.findFragmentById(R.id.container_fragment_detail)?.let {
+            supportFragmentManager.beginTransaction().remove(it).commit()
+        }
     }
 
 }

@@ -15,5 +15,11 @@ class AnimeRepository(private val animeDao: AnimeDao) {
         animeDao.insert(anime)
     }
 
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun clear() {
+        animeDao.deleteAll()
+    }
+
 
 }

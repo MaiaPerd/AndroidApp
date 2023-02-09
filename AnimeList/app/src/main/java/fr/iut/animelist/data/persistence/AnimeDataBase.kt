@@ -11,11 +11,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Database(entities = arrayOf(Anime::class), version = 1, exportSchema = false)
-abstract class AnimeDataBase: RoomDatabase() {
+abstract class AnimeDataBase : RoomDatabase() {
 
     abstract fun animeDao(): AnimeDao
 
-    class AnimeDatabaseCallback (private val scope: CoroutineScope
+    class AnimeDatabaseCallback(
+        private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
 
         override fun onCreate(db: SupportSQLiteDatabase) {
@@ -28,10 +29,7 @@ abstract class AnimeDataBase: RoomDatabase() {
                     animeDao.deleteAll()
 
                     // Add sample words.
-                    var anime = Anime("0", "anime 1")
-                    animeDao.insert(anime)
-                    anime = Anime("1", "anime 2")
-                    animeDao.insert(anime)
+
 
                 }
             }
@@ -45,14 +43,15 @@ abstract class AnimeDataBase: RoomDatabase() {
 
         fun getDatabase(
             context: Context,
-            scope: CoroutineScope): AnimeDataBase{
-            return  INSTANCE ?: synchronized(this) {
-                val  instance = Room.databaseBuilder(
+            scope: CoroutineScope
+        ): AnimeDataBase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AnimeDataBase::class.java,
-                    "anime_database"
+                    "anime_database_V2"
                 )
-                    .addCallback(AnimeDatabaseCallback(scope))
+                    // .addCallback(AnimeDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
                 instance
