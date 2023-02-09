@@ -15,7 +15,7 @@ data class Anime(
 data class Information(
     @SerializedName("slug") var titre: String = "",
     @SerializedName("synopsis") var synopsis: String? = "",
-    @SerializedName("startDate") var dateSortie: String = "",
+    @SerializedName("startDate") var dateSortie: String? = "",
     @SerializedName("episodeCount") var nbEpisode: String? = "",
     @SerializedName("subtype") var subtype: String = "",
     @SerializedName("status") var status: String = ""

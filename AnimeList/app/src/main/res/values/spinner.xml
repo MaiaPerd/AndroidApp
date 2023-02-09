@@ -2,6 +2,5 @@
 <resources>
     <string-array name="category_array">
         <item>All</item>
-        <item>2023</item>
     </string-array>
 </resources>

@@ -38,6 +38,8 @@ class AnimeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_anime, container, false)
         updateViewFromCurrentDog()
         nameAnime = view.findViewById<TextView>(R.id.txtNom)
+
+
         return view
     }
 

@@ -18,13 +18,10 @@ import fr.iut.animelist.api.APICall
 import fr.iut.animelist.data.Repository.AnimeRepository
 import fr.iut.animelist.viewmodel.AnimeListViewModel
 import fr.iut.animelist.viewmodel.AnimeListViewModelFactory
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 
 class AnimeListFragment : Fragment(), AdaptateurAnimeList.Callbacks,
     AdapterView.OnItemSelectedListener {
 
-    private val scope = CoroutineScope(Job())
     private lateinit var repository: AnimeRepository
     private lateinit var animeListViewModel: AnimeListViewModel
 
@@ -32,7 +29,7 @@ class AnimeListFragment : Fragment(), AdaptateurAnimeList.Callbacks,
         super.onCreate(savedInstanceState)
         repository = AnimeRepository(
             fr.iut.animelist.data.persistence.AnimeDataBase.getDatabase(
-                requireContext(), scope
+                requireContext()
             ).animeDao()
         )
         animeListViewModel = ViewModelProvider(this, AnimeListViewModelFactory(repository)).get()
@@ -102,20 +99,32 @@ class AnimeListFragment : Fragment(), AdaptateurAnimeList.Callbacks,
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        if (id == 0L) {
-
+        /*if (id == 0L) {
             animeListViewModel.clear()
             APICall().getAnimes()?.observe(viewLifecycleOwner) { list ->
                 for (item in list) animeListViewModel.insert(item)
             }
-        }
-
-        if (id == 1L) {
-            animeListViewModel.clear() // peut apparament ce faire en une ligne avec les live data grace a un filter / switch map sur la livedata
-            APICall().getAnimeGenres("")?.observe(viewLifecycleOwner) { list ->
-                for (item in list) animeListViewModel.insert(item)
+        }*/
+        if(parent != null){
+            animeListViewModel.clear()
+            var p = parent.getItemAtPosition(position)
+            if(p == "All"){
+                APICall().getAnimes()?.observe(viewLifecycleOwner) { list ->
+                    for (item in list) animeListViewModel.insert(item)
+                }
+            } else {
+                APICall().getAnimeGenres(p.toString())?.observe(viewLifecycleOwner) { list ->
+                    for (item in list) animeListViewModel.insert(item)
+                    if(list.size == 0){
+                        //view.findViewById<>()
+                    }
+                }
             }
         }
+
+
+        // peut apparament ce faire en une ligne avec les live data grace a un filter / switch map sur la livedata
+
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {

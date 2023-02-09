@@ -5,6 +5,7 @@ import fr.iut.animelist.model.Genres
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 
 interface AnimeService {
@@ -12,8 +13,8 @@ interface AnimeService {
     @GET("anime")
     fun listAnimes(): Call<Array<Anime>>
 
-    @GET("anime?filter[categories]={genres}")
-    fun listAnimesGenres(genres: String): Call<Array<Anime>>
+    @GET("anime")
+    fun listAnimesGenres(@Query("filter[categories]") genres: String): Call<Array<Anime>>
 
     @GET("anime/1")
     fun listOneAnime(): Call<Anime>
