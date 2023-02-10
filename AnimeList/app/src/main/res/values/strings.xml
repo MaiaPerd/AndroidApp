@@ -7,4 +7,6 @@
     <string name="mylist">myList</string>
     <string name="sysnopsi">sysnopsi</string>
     <string name="r_sum">résumé</string>
+    <string name="notes">Notes :</string>
+    <string name="nombres_d_pisode">Nombres d\'épisode:</string>
 </resources>

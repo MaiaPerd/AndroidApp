@@ -57,12 +57,15 @@ class AnimeListFragment : Fragment(), AdaptateurAnimeList.Callbacks,
         }
         spinner.onItemSelectedListener = this
 
-        APICall().getGenres()?.observe(viewLifecycleOwner) { list ->
-            var arrayList = list.map { l -> l.info?.name }
-            val arrayAdapter =
-                ArrayAdapter(binding.root.context, android.R.layout.simple_spinner_item, arrayList)
-            spinner.adapter = arrayAdapter
+        if(spinner.adapter.count < 2){
+            APICall().getGenres()?.observe(viewLifecycleOwner) { list ->
+                var arrayList = list.map { l -> l.info?.name }
+                val arrayAdapter =
+                    ArrayAdapter(binding.root.context, android.R.layout.simple_spinner_item, arrayList)
+                spinner.adapter = arrayAdapter
+            }
         }
+
 
         return binding.root
     }
@@ -92,20 +95,10 @@ class AnimeListFragment : Fragment(), AdaptateurAnimeList.Callbacks,
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        /*if (id == 0L) {
-            animeListViewModel.clear()
-            APICall().getAnimes()?.observe(viewLifecycleOwner) { list ->
-                for (item in list) animeListViewModel.insert(item)
-            }
-        }*/
         if(parent != null){
-            animeListViewModel.clear()
             var p = parent.getItemAtPosition(position)
-            if(p == "All"){
-                APICall().getAnimes()?.observe(viewLifecycleOwner) { list ->
-                    for (item in list) animeListViewModel.insert(item)
-                }
-            } else {
+            if(p != "All"){
+                animeListViewModel.clear()
                 APICall().getAnimeGenres(p.toString())?.observe(viewLifecycleOwner) { list ->
                     for (item in list) animeListViewModel.insert(item)
                 }

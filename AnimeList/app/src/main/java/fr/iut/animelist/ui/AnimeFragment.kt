@@ -9,7 +9,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
-import fr.iut.animelist.api.APICall
 import fr.iut.animelist.data.Repository.AnimeRepository
 import fr.iut.animelist.data.persistence.AnimeDataBase
 import fr.iut.animelist.databinding.FragmentAnimeBinding
@@ -64,15 +63,14 @@ class AnimeFragment : Fragment() {
 
     private fun updateViewFromCurrentDog(binding: FragmentAnimeBinding) {
 
-        APICall().getAnime(id ?: 1)?.observe(viewLifecycleOwner) { anime ->
-            binding.txtNom.text = anime.info?.titre
+       /* APICall().getAnime(id ?: 1)?.observe(viewLifecycleOwner) { anime ->
+            binding.txtNom.text = anime.info?.titre?.capitalize()?.replace("-", " ")
             binding.txtDateStart.text = anime.info?.dateSortie
             binding.txtFormat.text = anime.info?.subtype
             binding.txtSys.text = anime.info?.synopsis
             binding.txtStatus.text = anime.info?.status
             binding.txtNbEpisodes.text = anime.info?.nbEpisode
-            binding.txtType.text = anime.type
-        }
+        }*/
     }
 
 }

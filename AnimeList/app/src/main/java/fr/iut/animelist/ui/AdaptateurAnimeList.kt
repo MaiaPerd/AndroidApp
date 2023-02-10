@@ -1,5 +1,6 @@
 package fr.iut.animelist.ui
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,8 +47,17 @@ class AdaptateurAnimeList(private val listener: Callbacks) :
 
         fun bind(anime: Anime?) {
             this.anime = anime
-            nomItem.text = anime?.info?.titre
-            typeItem.text = anime?.type
+            nomItem.text = anime?.info?.titre?.capitalize()?.replace("-", " ")
+            typeItem.text = anime?.info?.subtype
+            if (anime?.info?.subtype == "TV"){
+                animeCard.setCardBackgroundColor(Color.rgb(162,222,255))
+            } else if (anime?.info?.subtype == "movie"){
+                animeCard.setCardBackgroundColor(Color.rgb(196,255,204))
+            } else if (anime?.info?.subtype == "OVA"){
+                animeCard.setCardBackgroundColor(Color.rgb(255,196,196))
+            } else if (anime?.info?.subtype == "ONA"){
+                animeCard.setCardBackgroundColor(Color.rgb(255,255,196))
+            }
             anneeItem.text = anime?.info?.dateSortie
             //  animeCard.setCardBackgroundColor(Color.RED)
 
