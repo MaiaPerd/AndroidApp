@@ -66,6 +66,12 @@ class AnimeFragment : Fragment() {
 
         APICall().getAnime(id ?: 1)?.observe(viewLifecycleOwner) { anime ->
             binding.txtNom.text = anime.info?.titre
+            binding.txtDateStart.text = anime.info?.dateSortie
+            binding.txtFormat.text = anime.info?.subtype
+            binding.txtSys.text = anime.info?.synopsis
+            binding.txtStatus.text = anime.info?.status
+            binding.txtNbEpisodes.text = anime.info?.nbEpisode
+            binding.txtType.text = anime.type
         }
     }
 

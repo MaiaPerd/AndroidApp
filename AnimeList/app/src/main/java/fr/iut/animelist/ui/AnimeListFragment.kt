@@ -64,10 +64,6 @@ class AnimeListFragment : Fragment(), AdaptateurAnimeList.Callbacks,
             spinner.adapter = arrayAdapter
         }
 
-        APICall().getAnimes()?.observe(viewLifecycleOwner) { list ->
-            for (item in list) animeListViewModel.insert(item)
-        }
-
         return binding.root
     }
 
@@ -112,9 +108,6 @@ class AnimeListFragment : Fragment(), AdaptateurAnimeList.Callbacks,
             } else {
                 APICall().getAnimeGenres(p.toString())?.observe(viewLifecycleOwner) { list ->
                     for (item in list) animeListViewModel.insert(item)
-                    if(list.size == 0){
-                        //view.findViewById<>()
-                    }
                 }
             }
         }

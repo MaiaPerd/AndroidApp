@@ -4,21 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.AnimeListActivity">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/animeListFragment"
-            android:name="fr.iut.animelist.ui.AnimeListFragment"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="9"
-            tools:layout_editor_absoluteX="199dp"
-            tools:layout_editor_absoluteY="416dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-
+    <include layout="@layout/activity_container" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
