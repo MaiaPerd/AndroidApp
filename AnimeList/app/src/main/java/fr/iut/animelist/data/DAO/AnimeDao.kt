@@ -1,10 +1,7 @@
 package fr.iut.animelist.data.DAO
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import fr.iut.animelist.model.Anime
 
 @Dao
@@ -19,6 +16,12 @@ interface AnimeDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(anime: Anime)
 
-    @Query("DELETE FROM anime_table")
+    @Query("DELETE FROM anime_table WHERE vue = false")
     suspend fun deleteAll()
+
+    @Query("SELECT * FROM anime_table WHERE vue = true")
+    fun getAnimeVue(): LiveData<Anime>
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun update(it: Anime)
 }

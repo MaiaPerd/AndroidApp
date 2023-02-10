@@ -56,21 +56,16 @@ class AnimeFragment : Fragment() {
         val binding = FragmentAnimeBinding.inflate(inflater)
         binding.animeVM = animeViewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        updateViewFromCurrentDog(binding)
+        binding.checkBox.setOnClickListener{
+            animeViewModel.save()
+        }
+
+        binding.ratingbar.setOnClickListener{
+            animeViewModel.save()
+        }
 
         return binding.root
     }
 
-    private fun updateViewFromCurrentDog(binding: FragmentAnimeBinding) {
-
-       /* APICall().getAnime(id ?: 1)?.observe(viewLifecycleOwner) { anime ->
-            binding.txtNom.text = anime.info?.titre?.capitalize()?.replace("-", " ")
-            binding.txtDateStart.text = anime.info?.dateSortie
-            binding.txtFormat.text = anime.info?.subtype
-            binding.txtSys.text = anime.info?.synopsis
-            binding.txtStatus.text = anime.info?.status
-            binding.txtNbEpisodes.text = anime.info?.nbEpisode
-        }*/
-    }
 
 }

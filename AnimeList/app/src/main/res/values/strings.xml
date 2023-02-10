@@ -9,4 +9,6 @@
     <string name="r_sum">résumé</string>
     <string name="notes">Notes :</string>
     <string name="nombres_d_pisode">Nombres d\'épisode:</string>
+    <string name="vue">Vue</string>
+    <string name="sysnopsis">Sysnopsis :</string>
 </resources>

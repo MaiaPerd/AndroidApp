@@ -24,6 +24,11 @@ class AnimeRepository(private val animeDao: AnimeDao) {
     fun getAnime(animeId: Int): LiveData<Anime>  {
         return animeDao.getAnime(animeId)
     }
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun update(it: Anime) {
+        animeDao.update(it)
+    }
 
 
 }

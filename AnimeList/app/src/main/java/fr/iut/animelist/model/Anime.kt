@@ -9,7 +9,9 @@ import com.google.gson.annotations.SerializedName
 data class Anime(
     @PrimaryKey @SerializedName("id") var id: Int = 0,
     @SerializedName("type") var type: String = "",
-    @Embedded @SerializedName("attributes") var info: Information?
+    @Embedded @SerializedName("attributes") var info: Information?,
+    var vue: Boolean = false,
+    var note: Float = 0.0f
 )
 
 data class Information(
