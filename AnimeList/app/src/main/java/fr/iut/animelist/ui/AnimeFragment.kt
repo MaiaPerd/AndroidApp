@@ -37,17 +37,11 @@ class AnimeFragment : Fragment() {
             ).animeDao()
         )
 
-        var a = savedInstanceState?.getInt(EXTRA_ANIME_ID)
-        var b = arguments?.getInt(EXTRA_ANIME_ID)
         id = (savedInstanceState?.getInt(EXTRA_ANIME_ID) ?: arguments?.getInt(EXTRA_ANIME_ID))
         var animeId: Int = id?:1
         animeViewModel = ViewModelProvider(this,  AnimeViewModelFactory(repository, animeId) ).get()
 
     }
-
-
-
-    lateinit var nameAnime: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

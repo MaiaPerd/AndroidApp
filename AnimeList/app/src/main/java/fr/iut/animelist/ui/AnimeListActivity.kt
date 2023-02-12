@@ -14,10 +14,8 @@ class AnimeListActivity : SimpleFragmentActivity(), AnimeListFragment.OnInteract
     override fun getLayoutResId() = R.layout.activity_main
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-      //  setContentView(R.layout.activity_main)
 
         supportActionBar?.setIcon(R.mipmap.ic_launcher)
 
@@ -29,7 +27,6 @@ class AnimeListActivity : SimpleFragmentActivity(), AnimeListFragment.OnInteract
         if (!isTwoPane) {
             removeDisplayedFragment()
         }
-
 
     }
 

@@ -1,5 +1,6 @@
 package fr.iut.animelist.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
@@ -44,10 +46,15 @@ class AnimeListFragment : Fragment(), AdaptateurAnimeList.Callbacks,
         with(binding.recyclerView) {
             adapter = animeAdapter
         }
-
-        animeListViewModel.allAnimes.observe(viewLifecycleOwner) { anime ->
-            anime.let { animeAdapter.submitList(it) }
+        animeListViewModel.showEmptyView.observe(viewLifecycleOwner){
+            valeur ->
+                    if(valeur == false){
+                        animeListViewModel.allAnimes.observe(viewLifecycleOwner) { anime ->
+                            anime.let { animeAdapter.submitList(it) }
+                        }
+                    }
         }
+
         val spinner: Spinner = binding.spinner
         ArrayAdapter.createFromResource(
             binding.root.context, R.array.category_array, android.R.layout.simple_spinner_item
@@ -66,6 +73,22 @@ class AnimeListFragment : Fragment(), AdaptateurAnimeList.Callbacks,
             }
         }
 
+        binding.viewAnime.setOnClickListener {
+            if(binding.viewAnime.text == "My View List"){
+                animeListViewModel.allAnimeView.observe(viewLifecycleOwner) { anime ->
+                    anime.let { animeAdapter.submitList(it) }
+                }
+                binding.spinner.isVisible = false
+                binding.viewAnime.text = "All Anime"
+            } else{
+                animeListViewModel.allAnimes.observe(viewLifecycleOwner) { anime ->
+                    anime.let { animeAdapter.submitList(it) }
+                }
+                binding.spinner.isVisible = true
+                binding.viewAnime.text = "My View List"
+            }
+
+        }
 
         return binding.root
     }
@@ -104,19 +127,12 @@ class AnimeListFragment : Fragment(), AdaptateurAnimeList.Callbacks,
                 }
             }
         }
-
-
-        // peut apparament ce faire en une ligne avec les live data grace a un filter / switch map sur la livedata
-
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
-        APICall().getAnimes()?.observe(viewLifecycleOwner) { list ->
+        animeListViewModel.allAnimes.observe(viewLifecycleOwner) { list ->
             for (item in list) animeListViewModel.insert(item)
         }
     }
 
 }
-
-
-// faire un bouton refresh avec un rechargement en local

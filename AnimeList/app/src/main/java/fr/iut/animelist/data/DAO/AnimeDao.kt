@@ -7,7 +7,7 @@ import fr.iut.animelist.model.Anime
 @Dao
 interface AnimeDao {
 
-    @Query("SELECT * FROM anime_table ORDER BY id ASC")
+    @Query("SELECT * FROM anime_table WHERE vue = false ORDER BY id ASC")
     fun getAnimes(): LiveData<List<Anime>>
 
     @Query("SELECT * FROM anime_table WHERE id = :id")
@@ -20,7 +20,7 @@ interface AnimeDao {
     suspend fun deleteAll()
 
     @Query("SELECT * FROM anime_table WHERE vue = true")
-    fun getAnimeVue(): LiveData<Anime>
+    fun getAnimeVue(): LiveData<List<Anime>>
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(it: Anime)

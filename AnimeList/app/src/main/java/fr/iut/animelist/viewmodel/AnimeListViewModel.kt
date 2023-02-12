@@ -9,6 +9,8 @@ import kotlinx.coroutines.launch
 class AnimeListViewModel(private val repository: AnimeRepository) : ViewModel() {
     val allAnimes: LiveData<List<Anime>> = repository.allAnimes
 
+    val allAnimeView: LiveData<List<Anime>> = repository.allAnimesView
+
     init {
         viewModelScope.launch {
             try {
@@ -16,7 +18,6 @@ class AnimeListViewModel(private val repository: AnimeRepository) : ViewModel() 
                 Log.e("Repository", "Not success")
             }
         }
-
     }
 
     val showEmptyView = Transformations.map(allAnimes, List<Anime>::isEmpty)

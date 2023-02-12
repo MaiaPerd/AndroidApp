@@ -22,11 +22,8 @@ class AnimeActivity : SimpleFragmentActivity() {
         animeID = intent.getIntExtra(EXTRA_ANIME_ID, 1)
         super.onCreate(savedInstanceState)
         AnimeFragment.newInstance(animeID)
-        /*supportFragmentManager.beginTransaction()
-            .replace(R.id.animeFragment, AnimeFragment.newInstance(animeID?:"0"))
-            .commit()*/
+
         setContentView(R.layout.activity_anime)
-//fragment manager . relation
     }
 
     override fun createFragment() = AnimeFragment.newInstance(animeID)

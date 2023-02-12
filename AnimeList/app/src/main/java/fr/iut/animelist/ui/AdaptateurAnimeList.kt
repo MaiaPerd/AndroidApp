@@ -59,7 +59,6 @@ class AdaptateurAnimeList(private val listener: Callbacks) :
                 animeCard.setCardBackgroundColor(Color.rgb(255,255,196))
             }
             anneeItem.text = anime?.info?.dateSortie
-            //  animeCard.setCardBackgroundColor(Color.RED)
 
         }
 

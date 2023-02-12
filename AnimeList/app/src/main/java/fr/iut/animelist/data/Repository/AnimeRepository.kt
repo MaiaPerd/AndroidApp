@@ -9,6 +9,8 @@ class AnimeRepository(private val animeDao: AnimeDao) {
 
     val allAnimes: LiveData<List<Anime>> = animeDao.getAnimes()
 
+    val allAnimesView: LiveData<List<Anime>> = animeDao.getAnimeVue()
+
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insert(anime: Anime) {

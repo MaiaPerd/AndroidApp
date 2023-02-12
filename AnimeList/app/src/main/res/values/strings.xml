@@ -11,4 +11,6 @@
     <string name="nombres_d_pisode">Nombres d\'épisode:</string>
     <string name="vue">Vue</string>
     <string name="sysnopsis">Sysnopsis :</string>
+    <string name="my_anime_view">my anime view</string>
+    <string name="my_view_list">My View List</string>
 </resources>
