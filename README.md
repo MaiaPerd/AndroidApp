@@ -6,9 +6,9 @@ Kistu: https://kitsu.docs.apiary.io
 
 L'application utilise principalement les requêtes :
 
-’’’https://kitsu.io/api/edge/anime’’’
+https://kitsu.io/api/edge/anime
 
-’’’https://kitsu.io/api/edge/genres’’’
+https://kitsu.io/api/edge/genres
 
 L'application est fait en kotlin.
 
