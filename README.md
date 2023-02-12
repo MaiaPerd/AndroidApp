@@ -1,3 +1,5 @@
+# AnimeList
+
 Bienvenue sur le dépôt de l'application AnimeList.
 
 AnimeList est une application qui récupère ces informations d'une API.
