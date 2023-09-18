@@ -12,7 +12,7 @@ https://kitsu.io/api/edge/anime
 
 https://kitsu.io/api/edge/genres
 
-L'application est faite en kotlin, et utilise retrofit pour récupérer les donées.
+L'application est faite en kotlin, et utilise retrofit pour récupérer les données.
 
 Elle permet de voir les informations d'animes trié par genres, de mettre si on la vue et de le noté dans ce cas.
 
